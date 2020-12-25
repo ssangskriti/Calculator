@@ -64,7 +64,6 @@ function handleSymbol(symbol){
 		case '−':
 		case '×':
 		case '÷':
-		
 			handleMath(symbol);
 			break;
 		 
