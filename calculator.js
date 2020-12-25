@@ -57,6 +57,7 @@ function handleSymbol(symbol){
 			else{
 				buffer = buffer.substring(0,buffer.length-1);
 			}
+			screen.innerText = buffer;
 			break;
 		}
 		case '+':
