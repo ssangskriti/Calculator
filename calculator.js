@@ -4,17 +4,25 @@ let previousOperator= null;
 
 const screen = document.querySelector('.screen');
 
+let preValue = 0;
 function buttonClick(value) {
 	// console.log(value);
+
 	if(isNaN(value))
 	{
 		handleSymbol(value);
+		preValue = 0;
 	}
 	else
 	{
 		handleNumber(value);
+		if(preValue)
+			screen.innerText = buffer;
+		else
+			screen.innerText = value;
+		preValue = 1;
 	}
-	screen.innerText = buffer;
+	
 }
 
 function handleSymbol(symbol){
@@ -28,19 +36,21 @@ function handleSymbol(symbol){
 		{
 			buffer = '0';
 			runningTotal = 0;
+			screen.innerText = buffer;
 			break;
 		}
-		case '&equals;':
+		case '=':
 		{
 			if(previousOperator===null)
 				return;
 			flushOperation(parseInt(buffer));
+			screen.innerText = runningTotal;
 			previousOperator = null;
-			buffer = runningTotal;
+			buffer = '0';
 			runningTotal = 0;
 			break; 
 		}
-		case '&loarr;':
+		case '←':
 		{
 			if(buffer.length===1)
 				buffer='0';
@@ -49,10 +59,10 @@ function handleSymbol(symbol){
 			}
 			break;
 		}
-		case '&plus;':
-		case '&minus;':
-		case '&times;':
-		case '&divide;':
+		case '+':
+		case '−':
+		case '×':
+		case '÷':
 		
 			handleMath(symbol);
 			break;
@@ -80,21 +90,21 @@ function handleMath(symbol){
 
 function flushOperation(intBuffer){
 
-	if (previousOperator==='&plus;')
+	if (previousOperator==='+')
 	{
-		runningTotal+=intBuffer;
+		runningTotal += intBuffer;
 	}
-	else if (previousOperator==='&minus;')
+	else if (previousOperator==='−')
 	{
 		runningTotal -= intBuffer;
 	}
-	else if(previousOperator==='&times;')
+	else if(previousOperator==='×')
 	{
-		runningTotal*=intBuffer;
+		runningTotal *= intBuffer;
 	}
-	else if(previousOperator==='&divide;'){
+	else if(previousOperator==='÷'){
 
-		runningTotal/=intBuffer;
+		runningTotal /= intBuffer;
 	}
 
 	console.log(runningTotal);
